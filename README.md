@@ -7,8 +7,8 @@ This repository contains the official PyTorch implementation of the paper: **"[I
 ## 1. Dependencies and Installation
 
 - Python >= 3.9
-- PyTorch >= 2.7
-- CUDA >= 10.2
+- PyTorch >= 2.7 (Tested with 2.7.1+cu118)
+- CUDA >= 11.8
 
 ### Installation Steps
 
@@ -22,16 +22,6 @@ python setup.py develop
 
 ## 2. Dataset Preparation
 We used the [LOL / VE-LOL] dataset for training and testing.
-Please organize the dataset structure as follows so the dataloader can correctly identify paths:
-
-datasets/
-  ├── [Dataset_Name]/     # e.g., LOLv1
-  │   ├── train/
-  │   │   ├── input/      # Low-light images
-  │   │   └── gt/         # Normal-light images (Ground Truth)
-  │   └── test/
-  │       ├── input/
-  │       └── gt/
 
 ## 3. Training
 Unlike the multi-stage training in the original CUE baseline, our method simplifies the process into a **single end-to-end training stage** for the enhancement network.
