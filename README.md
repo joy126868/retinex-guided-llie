@@ -39,3 +39,14 @@ To train the Retinex-Guided model, run the following command:
 # Basic usage
 python train.py -opt options/train/retinex_guided_llie/retinex_guided_llie.yml
 ```
+
+## 4. Testing / Inference
+To evaluate the model using pre-trained weights:
+
+Check the test config file: options/test/learnedPrior/LearnablePrior.yml
+
+Run the testing command:
+
+```Bash
+python test.py -opt options/test/retinex_guided_llie/retinex_guided_llie.yml
+```
