@@ -6,8 +6,8 @@ This repository contains the official PyTorch implementation of the paper: **"[I
 
 ## 1. Dependencies and Installation
 
-- Python >= 3.7
-- PyTorch >= 1.7
+- Python >= 3.9
+- PyTorch >= 2.7
 - CUDA >= 10.2
 
 ### Installation Steps
@@ -20,3 +20,9 @@ pip install -r requirements.txt
 python setup.py develop
 ```
 
+## 2. Dataset Preparation
+We used the [Insert Dataset Name, e.g., LOL / VE-LOL] dataset for training and testing.
+
+Download the dataset from [Official Link if public, do not link to your Google Drive].
+
+Organize the dataset structure as follows:
