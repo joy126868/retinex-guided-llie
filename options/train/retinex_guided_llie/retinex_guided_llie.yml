@@ -1,0 +1,219 @@
+name: LearnablePrior_enhancement_ablation_full
+use_tb_logger: true
+model_type: RetinexGuidedLLIEModel
+scale: 1
+num_gpu: 1
+manual_seed: 10
+datasets:
+  train:
+    name: LOL
+    type: PairedImageDataset
+    dataroot_gt: D:/CUE-master/LOL/train/normal
+    dataroot_lq: D:/CUE-master/LOL/train/low
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
+    gt_size: 224
+    use_flip: true
+    use_rot: true
+    use_shuffle: true
+    num_worker_per_gpu: 6
+    batch_size_per_gpu: 4
+    dataset_enlarge_ratio: 1
+    prefetch_mode: null
+  val:
+    name: LOL
+    type: PairedImageDataset
+    dataroot_gt: D:/CUE-master/LOL/test/normal
+    dataroot_lq: D:/CUE-master/LOL/test/low
+    io_backend:
+      type: disk
+network_g:
+  refiner_enable: true
+  refiner_in_ch: 8
+  refiner_base: 48
+  refiner_heads: 4
+  refiner_use_ssf: true
+  refiner_scale: 0.8
+  type: RetinexGuidedEnhanceNet
+  stage: 3
+  illu_channel: 1
+  refl_channel: 3
+  noise_channel: 3
+  num_feat: 64
+  ratio: 8
+  alpha: 0.001
+  beta: 0.001
+  mu: 10.0
+  illu_prior_path: null
+  freeze_illu_prior: false
+  refl_cap: 5.0
+  delta_r_lf_ks: 15
+  delta_r_clip: 0.25
+  use_soft_clamp: true
+  softclamp_beta: 10.0
+  wb_enable: true
+  wb_scale: 0.12
+  wb_clip: 0.15
+  edge_blur_ks: 3
+  chroma_scale: 0.7
+  hvi_decouple_enable: true
+  hvi_refine_base: 32
+  hvi_h_scale: 0.14
+  hvi_v_scale: 0.22
+  wavelet_refine_enable: true
+  wavelet_levels: 2
+  wavelet_base: 32
+  wavelet_scale: 0.18
+  delta_r_scale: 0.6
+  init_illu_bias: -0.4
+  vis_color_only_enable: false
+  vis_saturation_scale: 1.0
+  str_a: 0.7
+  str_max: 2.6
+  str_mix: 1.0
+  illu_bias: 1.4
+  illu_gamma: 0.6
+  vis_highl_enable: true
+  vis_highl_gamma: 0.25
+  vis_highl_boost: 2.0
+network_noisePrior:
+  type: NoisePriorHF
+  blur_ks: 5
+path:
+  experiments_root: D:/CUE-master/experiments
+  results_root: D:/CUE-master/results
+  pretrain_network_g: null
+  strict_load_g: false
+  pretrain_network_noisePrior: null
+  strict_load_noisePrior: false
+  resume_state: D:/CUE-master/experiments/LearnablePrior_enhancement_ablation_full/training_states/148000.state
+train:
+  hf_w: 0.06
+  hf_levels: 2
+  stage0_w: 0.1
+  delta_tv_w: 0.02
+  lr_pix_w: 0.1
+  lr_pix_scale: 0.25
+  mean_w: 0.0
+  sat_w: 0.002
+  use_gtmean_pix: true
+  gtmean_sigma: 0.1
+  use_gtmean_all: true
+  use_gtmean_edge: true
+  use_gtmean_hvi: true
+  use_gtmean_wavelet: true
+  wavelet_w: 0.04
+  wavelet_levels: 2
+  wb_reg_w: 0.001
+  ema_decay: 0.999
+  mask_ratio: 0.5
+  optim_g:
+    type: Adam
+    lr: 0.0001
+    weight_decay: 0
+    betas:
+    - 0.9
+    - 0.999
+  scheduler:
+    type: MultiStepLR
+    milestones:
+    - 50000
+    - 100000
+    - 150000
+    - 200000
+    - 250000
+    gamma: 0.5
+  total_iter: 300000
+  warmup_iter: -1
+  dual: false
+  gtRecon_opt: null
+  lowRecon_opt:
+    type: L1Loss
+    loss_weight: 1.0
+    reduction: mean
+  refl_opt:
+    type: L1Loss
+    loss_weight: 0.05
+    reduction: mean
+  illuMutualInput_opt:
+    type: illuMutualInputLoss
+    loss_weight: 0.001
+    reduction: mean
+  illuMutual_opt:
+    type: illuMutualLoss
+    loss_weight: 0.2
+    reduction: mean
+  pixel_opt:
+    type: L1Loss
+    loss_weight: 1.0
+    reduction: mean
+  enhancedIllu_opt:
+    type: L1Loss
+    loss_weight: 0.05
+    reduction: mean
+  enhancedIlluTV_opt:
+    type: IlluTVLoss
+    loss_weight: 0.02
+    reduction: mean
+  reflRestore_opt:
+    type: L1Loss
+    loss_weight: 0.1
+    reduction: mean
+  noisePrior_opt:
+    type: L1Loss
+    loss_weight: 0.001
+    reduction: mean
+  refl_warmup_iters: 10000
+  edge_warmup_iters: 5000
+  hvi_warmup_iters: 5000
+  chroma_warmup_iters: 3000
+  chroma_w: 0.08
+  enhancedIllu_warmup_iters: 10000
+  edge_opt:
+    type: L1Loss
+    loss_weight: 0.2
+    reduction: mean
+  hvi_opt:
+    type: L1Loss
+    loss_weight: 0.1
+    reduction: mean
+  enhancedIlluTV_warmup_iters: 2000
+  refl_cap: 5.0
+  refl_lf_w: 0.5
+  refl_lf_ks: 31
+  refl_edge_thr: 0.15
+  refl_edge_tau: 0.05
+  refl_base: 0.35
+val:
+  calc_lpips: false
+  calc_niqe: false
+  metric_device: cpu
+  save_img: true
+  val_freq: 200
+  vis_exposure: 1.25
+  vis_gamma: 0.85
+  metrics:
+    psnr:
+      type: calculate_psnr
+      crop_border: 0
+      test_y_channel: false
+    ssim:
+      type: calculate_ssim
+      crop_border: 0
+      test_y_channel: false
+    psnr_y:
+      type: calculate_psnr
+      crop_border: 0
+      test_y_channel: true
+    ssim_y:
+      type: calculate_ssim
+      crop_border: 0
+      test_y_channel: true
+logger:
+  print_freq: 100
+  save_checkpoint_freq: 200.0
+  use_tb_logger: true
+  wandb:
+    project: null
+    resume_id: null
