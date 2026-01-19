@@ -15,7 +15,6 @@ This is the Pytorch Implementation for 2026 ICIP paper.
 
 ```bash
 pip install -r requirements.txt
-python setup.py develop
 ```
 
 ## 2. Dataset Preparation
