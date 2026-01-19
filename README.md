@@ -1,6 +1,7 @@
 # Retinex-Guided Low-Light Image Enhancement
 
-This repository contains the official PyTorch implementation of the paper: **"RETINEX-GUIDED LOW-LIGHT ENHANCEMENT WITH LEARNABLE PRIORS AND REFINEMENT"**, submitted to **IEEE ICIP 2026**.
+This repository contains the official PyTorch implementation of the paper: 
+**"RETINEX-GUIDED LOW-LIGHT ENHANCEMENT WITH LEARNABLE PRIORS AND REFINEMENT"**, submitted to **IEEE ICIP 2026**.
 
 > **Note:** This code is for academic research use only.
 
