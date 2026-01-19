@@ -21,12 +21,20 @@ python setup.py develop
 ```
 
 ## 2. Dataset Preparation
-We used the [Insert Dataset Name, e.g., LOL / VE-LOL] dataset for training and testing.
+We used the [LOL / VE-LOL] dataset for training and testing.
+Please organize the dataset structure as follows so the dataloader can correctly identify paths:
 
-Organize the dataset structure as follows:
+datasets/
+  ├── [Dataset_Name]/     # e.g., LOLv1
+  │   ├── train/
+  │   │   ├── input/      # Low-light images
+  │   │   └── gt/         # Normal-light images (Ground Truth)
+  │   └── test/
+  │       ├── input/
+  │       └── gt/
 
 ## 3. Training
-Unlike the multi-stage training in the original CUE baseline, our method simplifies the process into a single end-to-end training stage for the enhancement network.
+Unlike the multi-stage training in the original CUE baseline, our method simplifies the process into a ***single end-to-end training stage*** for the enhancement network.
 
 ### Prerequisites
 Ensure your dataset paths are correctly configured in the configuration file:
