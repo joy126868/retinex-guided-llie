@@ -34,11 +34,10 @@ datasets/
   │       └── gt/
 
 ## 3. Training
-Unlike the multi-stage training in the original CUE baseline, our method simplifies the process into a ***single end-to-end training stage*** for the enhancement network.
+Unlike the multi-stage training in the original CUE baseline, our method simplifies the process into a **single end-to-end training stage** for the enhancement network.
 
 ### Prerequisites
-Ensure your dataset paths are correctly configured in the configuration file:
-`options/train/retinex_guided_llie/retinex_guided_llie.yml` (Check your specific YAML path)
+The training configuration is located at: options/train/retinex_guided_llie/retinex_guided_llie.yml
 
 ### Run Training
 To train the Retinex-Guided model, run the following command:
@@ -47,14 +46,16 @@ To train the Retinex-Guided model, run the following command:
 # Basic usage
 python train.py -opt options/train/retinex_guided_llie/retinex_guided_llie.yml
 ```
+Checkpoints: Model weights are saved in experiments/.
 
 ## 4. Testing / Inference
 To evaluate the model using pre-trained weights:
 
-Check the test config file: options/test/learnedPrior/LearnablePrior.yml
-
-Run the testing command:
+1. Check the test config file: options/test/retinex_guided_llie/retinex_guided_llie.yml
+2. Run the testing command:
 
 ```Bash
 python test.py -opt options/test/retinex_guided_llie/retinex_guided_llie.yml
 ```
+The visual results will be saved in results/.
+
