@@ -23,6 +23,19 @@ python setup.py develop
 ## 2. Dataset Preparation
 We used the [Insert Dataset Name, e.g., LOL / VE-LOL] dataset for training and testing.
 
-Download the dataset from [Official Link if public, do not link to your Google Drive].
-
 Organize the dataset structure as follows:
+
+## 3. Training
+Unlike the multi-stage training in the original CUE baseline, our method simplifies the process into a single end-to-end training stage for the enhancement network.
+
+### Prerequisites
+Ensure your dataset paths are correctly configured in the configuration file:
+`options/train/retinex_guided_llie/retinex_guided_llie.yml` (Check your specific YAML path)
+
+### Run Training
+To train the Retinex-Guided model, run the following command:
+
+```bash
+# Basic usage
+python train.py -opt options/train/retinex_guided_llie/retinex_guided_llie.yml
+```
